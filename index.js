@@ -340,3 +340,183 @@ function onDown(id){
     console.log(wKingMoved)
     ready = true
 }
+
+function onUp(id){
+    
+    if(id != clicked)
+    {
+        if (document.getElementById(id).src.includes(empty) == false){
+            test = true
+        }
+    
+    
+        function play(){
+            document.getElementById(id).src = figure;
+                        document.getElementById(clicked).src = empty;
+                        figure = null;
+                        console.log('mozna');
+                        ready = false;
+                        sound.play();
+        }
+    
+        
+        
+        if (clicked != id && figure != null){
+            if (document.getElementById(clicked).src.includes("white") && document.getElementById(id).src.includes("white") == false && white == true){
+    
+                if (document.getElementById(clicked).src.includes("rook")){
+                    if(positions[id]%8 == positions[clicked]%8 || Math.floor((positions[clicked]-1)/8) == Math.floor((positions[id]-1)/8)){
+                        play();
+                        white = false;
+                    }
+                }
+                else if (document.getElementById(clicked).src.includes("bishop")){
+                    if(positions[id]%7 == positions[clicked]%7 || positions[id]%9 == positions[clicked]%9){
+                        play();
+                        white = false;
+                    }
+                }
+    
+                else if (document.getElementById(clicked).src.includes("knight")){
+                    if ([positions[clicked]-17,positions[clicked]-10,positions[clicked]-15,positions[clicked]-6,positions[clicked]+17,positions[clicked]+10,positions[clicked]+15,positions[clicked]+6].includes(positions[id])){
+                        play();
+                        white = false;
+                    }
+                }
+    
+                else if(document.getElementById(clicked).src.includes("queen")){
+                    if((positions[id]%7 == positions[clicked]%7 || positions[id]%9 == positions[clicked]%9) || positions[id]%8 == positions[clicked]%8 || Math.floor((positions[clicked]-1)/8) == Math.floor((positions[id]-1)/8)){
+                        play();
+                        white = false; 
+                    }
+                }
+    
+                else if(document.getElementById(clicked).src.includes("king")){
+                    if([positions[clicked]-1,positions[clicked]-7,positions[clicked]-8,positions[clicked]-9,positions[clicked]+1,positions[clicked]+7,positions[clicked]+8,positions[clicked]+9].includes(positions[id])){
+                        play();
+                        white = false; 
+                        wKingMoved = true;
+                    }
+                    else if (id == 'g1' && document.getElementById('f1').src.includes("empty") && document.getElementById('g1').src.includes("empty") && document.getElementById('h1').src.includes("rook") && wKingMoved == false){
+                        document.getElementById(clicked).src = empty
+                        document.getElementById('h1').src = empty
+                        document.getElementById('f1').src = wRook1
+                        document.getElementById('g1').src = wKing
+                        figure = null;
+                        console.log('mozna');
+                        ready = false;
+                    }
+                    else if (id == 'c1' && document.getElementById('b1').src.includes("empty") && document.getElementById('c1').src.includes("empty") && document.getElementById('d1').src.includes("empty") && document.getElementById('a1').src.includes("rook") && wKingMoved == false){
+                        document.getElementById(clicked).src = empty
+                        document.getElementById('a1').src = empty
+                        document.getElementById('d1').src = wRook1
+                        document.getElementById('c1').src = wKing
+                        figure = null;
+                        console.log('mozna');
+                        ready = false;
+                    }
+                }
+    
+                else if(document.getElementById(clicked).src.includes("pawn")){
+                    if(((positions[id] + 8 == positions[clicked] || (positions[clicked]>48 && positions[clicked]<57 && positions[id] + 16 == positions[clicked] && document.getElementById(positionsReversed[positions[clicked]-8]).src.includes("empty"))) && document.getElementById(id).src.includes(empty)) || ((positions[id] + 7 == positions[clicked] || positions[id] + 9 == positions[clicked]) && document.getElementById(id).src.includes("black"))){
+                        play();
+                        white = false; 
+                    }
+                }
+            }
+    
+            
+    
+            else if (document.getElementById(clicked).src.includes("black") && document.getElementById(id).src.includes("black") == false && white == false){
+    
+                if (document.getElementById(clicked).src.includes("rook")){
+                    if(positions[id]%8 == positions[clicked]%8 || Math.floor((positions[clicked]-1)/8) == Math.floor((positions[id]-1)/8)){
+                        play();
+                        white = true;
+                    }
+                }
+    
+                else if (document.getElementById(clicked).src.includes("bishop")){
+                    if(positions[id]%7 == positions[clicked]%7 || positions[id]%9 == positions[clicked]%9){
+                        play();
+                        white = true;
+                    }
+                }
+    
+                else if (document.getElementById(clicked).src.includes("knight")){
+                    if ([positions[clicked]-17,positions[clicked]-10,positions[clicked]-15,positions[clicked]-6,positions[clicked]+17,positions[clicked]+10,positions[clicked]+15,positions[clicked]+6].includes(positions[id])){
+                        play();
+                        white = true;
+                    }
+                }
+    
+                else if(document.getElementById(clicked).src.includes("queen")){
+                    if((positions[id]%7 == positions[clicked]%7 || positions[id]%9 == positions[clicked]%9) || positions[id]%8 == positions[clicked]%8 || Math.floor((positions[clicked]-1)/8) == Math.floor((positions[id]-1)/8)){
+                        play();
+                        white = true; 
+                    }
+                }
+    
+                else if(document.getElementById(clicked).src.includes("king")){
+                    if([positions[clicked]-1,positions[clicked]-7,positions[clicked]-8,positions[clicked]-9,positions[clicked]+1,positions[clicked]+7,positions[clicked]+8,positions[clicked]+9].includes(positions[id])){
+                        play();
+                        white = true; 
+                        bKingMoved = true;
+                    }
+                    else if (id == 'g8' && document.getElementById('f8').src.includes("empty") && document.getElementById('g8').src.includes("empty") && document.getElementById('h8').src.includes("rook") && bKingMoved == false){
+                        document.getElementById(clicked).src = empty
+                        document.getElementById('h8').src = empty
+                        document.getElementById('f8').src = bRook1
+                        document.getElementById('g8').src = bKing
+                        figure = null;
+                        console.log('mozna');
+                        ready = false;
+                    }
+                    else if (id == 'c8' && document.getElementById('b8').src.includes("empty") && document.getElementById('c8').src.includes("empty") && document.getElementById('d8').src.includes("empty") && document.getElementById('a8').src.includes("rook") && bKingMoved == false){
+                        document.getElementById(clicked).src = empty
+                        document.getElementById('a8').src = empty
+                        document.getElementById('d8').src = bRook1
+                        document.getElementById('c8').src = bKing
+                        figure = null;
+                        console.log('mozna');
+                        ready = false;
+                    }
+                }
+    
+                else if(document.getElementById(clicked).src.includes("pawn")){
+                    if(((positions[id] - 8 == positions[clicked] || (positions[clicked]>8 && positions[clicked]<17 && positions[id] - 16 == positions[clicked] && document.getElementById(positionsReversed[positions[clicked]+8]).src.includes("empty"))) && document.getElementById(id).src.includes(empty)) || ((positions[id] - 7 == positions[clicked] || positions[id] - 9 == positions[clicked]) && document.getElementById(id).src.includes("white"))){
+                        play();
+                        white = true; 
+                    }
+                }
+            }
+    
+            
+    
+    
+    
+            /* document.getElementById(id).src = figure;
+            document.getElementById(clicked).src = empty;
+            figure = null; */
+        } 
+        else{
+            figure = null;
+        }
+    
+    
+    
+    
+    
+        if (document.getElementById(id).src.includes(empty) == false && ready == true){
+            figure = document.getElementById(id).src;
+        }
+        else if (clicked == id && figure != null){
+            figure = null;
+        }
+        test = false
+        /* console.log(positions[id]); */
+        clicked = id
+        console.log(wKingMoved)
+        ready = true
+    }
+    }
